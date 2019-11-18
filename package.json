@@ -1,0 +1,11 @@
+{
+  "name": "fetch-ipfs",
+  "devDependencies": {
+    "webpack": "*",
+    "webpack-cli": "*",
+    "mime-types": "*"
+  },
+  "scripts": {
+    "install": "webpack-cli mime-types-src/entry.js --mode none --output-library MimeTypes --output-library-target window -o modules/mime-types.js"
+  }
+}
