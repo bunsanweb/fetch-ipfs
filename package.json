@@ -1,6 +1,8 @@
 {
   "name": "fetch-ipfs",
   "devDependencies": {
+    "local-web-server": "*",
+    "puppeteer": "*",
     "webpack": "*",
     "webpack-cli": "*",
     "mime-types": "*"
