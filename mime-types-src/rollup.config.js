@@ -15,6 +15,8 @@ export default [{
     nodeResolve(),  // for resolve "mime-types" as `node_modules/mime-types`
     commonjs(),     // for import mime-types (cjs script)
     json(),         // for import mime-db (json file)
+
+    // Prepend MIT Licenses of dependent packages as JS comment
     banner({file: "./node_modules/mime-db/LICENSE"}),
     banner({file: "./node_modules/mime-types/LICENSE"}),
   ],
