@@ -1,1 +1,2 @@
-module.exports = require("mime-types");
+export {default} from "mime-types";
+

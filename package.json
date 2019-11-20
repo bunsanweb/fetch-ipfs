@@ -3,11 +3,15 @@
   "devDependencies": {
     "local-web-server": "*",
     "puppeteer": "*",
-    "webpack": "*",
-    "webpack-cli": "*",
-    "mime-types": "*"
+    "mime-types": "*",
+    "rollup": "*",
+    "rollup-plugin-node-builtins-brofs": "*",
+    "rollup-plugin-node-resolve": "*",
+    "rollup-plugin-commonjs": "*",
+    "rollup-plugin-banner": "*",
+    "rollup-plugin-json": "*"
   },
   "scripts": {
-    "install": "webpack-cli mime-types-src/entry.js --mode none --output-library MimeTypes --output-library-target window -o modules/mime-types.js"
+    "install": "rollup -c mime-types-src/rollup.config.js"
   }
 }

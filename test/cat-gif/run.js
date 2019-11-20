@@ -33,7 +33,7 @@ const finish = () => {
     const finished = finish();
     await page.exposeFunction("finish", finished.finish);
     await page.goto(`http://localhost:${port}`, {waitUntil: "networkidle0"});
-    setTimeout(finished.error, 15000);
+    setTimeout(finished.error, 15000, `timeout: ${15000}ms`);
     await finished.promise;
   } finally {
     await browser.close();

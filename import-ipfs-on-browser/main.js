@@ -11,9 +11,8 @@ const main = async () => {
   });
   await node.ready;
 
-  console.log(await node.version());
-  const id = await node.id();
-  console.log(`Peer ID:`, id);
+  console.log("IPFS version:", (await node.version()).version);
+  console.log(`Peer ID:`, (await node.id()).id);
 
   // fetch content by cid from ipfs node on browser
   // check on web console
@@ -21,6 +20,7 @@ const main = async () => {
   // this cid is dir that includes only "cat.gif"
   // by https://github.com/ipfs/interface-js-ipfs-core/blob/master/SPEC/FILES.md
   const cid = `QmQ2r6iMNpky5f1m4cnm3Yqw8VSvjuKpTcK1X7dBR1LkJF`;
+  console.log(`await to node.get("${cid})`);
   const files = await node.get(cid);
   console.log(files);
   // files[0].type === "dir"
@@ -61,4 +61,4 @@ const main = async () => {
 
   //NOTE
 };
-main().catch(console.error);
+main().catch(err => console.error("error", err));

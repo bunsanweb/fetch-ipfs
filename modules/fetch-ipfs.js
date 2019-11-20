@@ -1,4 +1,4 @@
-import "./mime-types.js";
+import MimeTypes from "./mime-types.js";
 
 const gatewayList = [
   "https://ipfs.io/ipfs/",
