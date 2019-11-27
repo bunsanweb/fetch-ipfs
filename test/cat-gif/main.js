@@ -27,6 +27,8 @@ const main = async () => {
   console.assert(
     res1.headers.get("content-length") === `${content1.byteLength}`,
     "content-length");
-  window.finish();
+
+  await node.stop();
+  if (typeof window.finish === "function") window.finish();
 };
 main().catch(console.error);
