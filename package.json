@@ -1,19 +1,11 @@
 {
   "name": "fetch-ipfs",
   "type": "module",
-  "engines": {"node": ">=13.2.0"},
+  "engines": {
+    "node": ">=13.2.0"
+  },
   "devDependencies": {
     "local-web-server": "*",
-    "puppeteer": "*",
-    "mime-types": "*",
-    "rollup": "*",
-    "rollup-plugin-node-builtins-brofs": "*",
-    "rollup-plugin-node-resolve": "*",
-    "rollup-plugin-commonjs": "*",
-    "rollup-plugin-banner": "*",
-    "rollup-plugin-json": "*"
-  },
-  "scripts": {
-    "install": "rollup -c mime-types-src/rollup.config.js"
+    "puppeteer": "*"
   }
 }

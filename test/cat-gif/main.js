@@ -20,13 +20,10 @@ const main = async () => {
   //console.log(res1.url);
   //console.log(res1.headers.get("content-type"));
   const content1 = await res1.arrayBuffer();
-  //console.log(content1.byteLength);
-  console.assert(content1.byteLength > 0, "byteLength");
+  //NOTE: no content-length header in Response from js-ipfs-http-response
+  console.assert(content1.byteLength === 1629326, "byteLength");
   console.assert(
     res1.headers.get("content-type") === "image/gif", "content-type");
-  console.assert(
-    res1.headers.get("content-length") === `${content1.byteLength}`,
-    "content-length");
 
   await node.stop();
   if (typeof window.finish === "function") window.finish();
