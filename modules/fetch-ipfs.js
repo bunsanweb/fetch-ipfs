@@ -8,20 +8,28 @@ const gatewayList = [
 export const fetchImpl = options => {
   return options.fetch ? options.fetch : fetch;
 };
+export const additionalGateways = options => {
+  return Array.isArray(options.additionalGateways) ?
+    options.additionalGateways : [];
+};
 
 export const createFetch = (node, options = {}) => {
-  const gateways = gatewayList.slice();
+  const gateways = additionalGateways(options).concat(gatewayList);
+  
   const fetch = async (url, init = {}) => {
     const uri = url instanceof Request ? url.url : url;
     const prefix = gateways.find(prefix => uri.startsWith(prefix));
     if (!prefix) {
       const res =  await fetchImpl(options)(url, init);
-      if (options.captureGateway && res.headers.has("x-ipfs-path")) {
+      if (!options.constantGatewayList && res.headers.has("x-ipfs-path")) {
         // Append new IPFS Gateway
         const path = res.headers.get("x-ipfs-path");
-        const root = uri.slice(0, uri.indexOf(path));
-        const gateway = `${root}${path.startsWith("/ipfs/") ? "/ipfs/" : "/"}`;
-        gateways.push(gateway);
+        const pathIndex = uri.indexOf(path);
+        if (path.startsWith("/ipfs/") && pathIndex > 0) {
+          const root = uri.slice(0, pathIndex);
+          const gateway = `${root}/ipfs/`;
+          gateways.push(gateway);
+        }
       }
       return res;
     }
@@ -29,7 +37,8 @@ export const createFetch = (node, options = {}) => {
     await node.ready;
     
     const ipfsName = uri.slice(prefix.length);
-    return await IpfsHttpResponse.getResponse(node, `/ipfs/${ipfsName}`);
+    const res = await IpfsHttpResponse.getResponse(node, `/ipfs/${ipfsName}`);
+    return Object.defineProperty(res, "url", {value: uri, writable: false});
   };
   return fetch;
 };
