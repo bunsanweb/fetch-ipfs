@@ -32,7 +32,13 @@ export const run = async (urlPorts, opts = {}) => {
       guard.finish();
     }
     await pagePromise;
-    await page.close();
+    if (opts.launch && opts.launch.headless === false) {
+      const pageGuard = newGuard();
+      page.on("close", pageGuard.finish);
+      await pageGuard.promise;
+    } else {
+      await page.close();
+    }
   } finally {
     await browser.close();
     wss.forEach(ws => ws.server.close());
