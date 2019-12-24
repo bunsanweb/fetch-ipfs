@@ -1,4 +1,5 @@
 import path from "path";
+import nodeUrl from "url";
 
 import LocalWebServer from "local-web-server";
 import puppeteer from "puppeteer";
@@ -46,8 +47,8 @@ export const run = async (urlPorts, opts = {}) => {
 };
 
 export const runLWS = (url, port) => {
-  const file = new URL(url).pathname;
-  const directory = file.endsWith("/") ? file : path.dirname(file);
+  const file = nodeUrl.fileURLToPath(url);
+  const directory = file.endsWith(path.sep) ? file : path.dirname(file);
   return LocalWebServer.create({port, directory});
 };
 
