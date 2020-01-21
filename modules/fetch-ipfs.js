@@ -1,4 +1,7 @@
+// Locally import non-module js
 import "https://cdn.jsdelivr.net/npm/ipfs-http-response/dist/index.js";
+const IpfsHttpResponse = window.IpfsHttpResponse; 
+delete window.IpfsHttpResponse;
 
 const gatewayList = [
   "https://ipfs.io/ipfs/",
@@ -11,6 +14,9 @@ export const fetchImpl = options => {
 export const additionalGateways = options => {
   return Array.isArray(options.additionalGateways) ?
     options.additionalGateways : [];
+};
+export const IpfsHttpResponseImpl = options => {
+  return options.IpfsHttpResponse ? options.IpfsHttpResponse : IpfsHttpResponse;
 };
 
 export const createFetch = (node, options = {}) => {
@@ -37,7 +43,8 @@ export const createFetch = (node, options = {}) => {
     await node.ready;
     
     const ipfsName = uri.slice(prefix.length);
-    const res = await IpfsHttpResponse.getResponse(node, `/ipfs/${ipfsName}`);
+    const res = await IpfsHttpResponseImpl(options).getResponse(node, `/ipfs/${ipfsName}`);
+    //const res = await IpfsHttpResponse.getResponse(node, `/ipfs/${ipfsName}`);
     return Object.defineProperty(res, "url", {value: uri, writable: false});
   };
   return fetch;

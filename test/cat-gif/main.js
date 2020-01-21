@@ -1,5 +1,8 @@
-import * as FetchIpfs from "./modules/fetch-ipfs.js";
-import "https://cdn.jsdelivr.net/npm/ipfs/dist/index.js";
+import * as FetchIpfs from "http://localhost:10000/fetch-ipfs.js";
+
+//NOTE: matched versions for current Ipfs-0.40.0 and IpfsHttpResponse-0.4.0
+import "https://cdn.jsdelivr.net/npm/ipfs@0.40.0/dist/index.js";
+import "https://cdn.jsdelivr.net/npm/ipfs-http-response@0.4.0/dist/index.js";
 //console.log(window.Ipfs);
 
 const main = async () => {
@@ -13,7 +16,8 @@ const main = async () => {
   //console.log("IPFS version:", (await node.version()).version);
   //console.log(`Peer ID:`, (await node.id()).id);
 
-  const ipfsFetch = FetchIpfs.createFetch(node);
+  //const ipfsFetch = FetchIpfs.createFetch(node);
+  const ipfsFetch = FetchIpfs.createFetch(node, {IpfsHttpResponse});
   
   const url1 = "https://gateway.ipfs.io/ipfs/QmQ2r6iMNpky5f1m4cnm3Yqw8VSvjuKpTcK1X7dBR1LkJF/cat.gif";
   const res1 = await ipfsFetch(url1);
